@@ -35,6 +35,7 @@ export const Tamagotchi = () => {
         setHappiness(happiness => Math.min(100, happiness + 5));
     };
 
+    
     return(
         <div>
             <h1 className="name">{name}</h1>
