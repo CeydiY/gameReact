@@ -1,0 +1,33 @@
+.name{
+    color: blueviolet;
+    margin-bottom: .3em;
+}
+p{
+    margin: 10px 0;
+    font-size: 1.5em;
+}
+button{
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5%;
+    cursor: pointer;
+    margin-top: 2em;
+    margin-left: 1.5em;
+    background-color: violet;
+}
+
+.progress-bar {
+    height: 30px;
+    background: blueviolet;
+    box-shadow: 2px 20px 15px -7px rgba(123, 56, 91, 0.8);
+    border-radius: 50px;
+    transition: all 0.5s;
+    margin-top: .5em;
+}
+
+.states{
+    font-style: italic;
+    font-family: "Century Gothic", serif;
+    font-weight: bold;
+    font-size: 25px;
+}
