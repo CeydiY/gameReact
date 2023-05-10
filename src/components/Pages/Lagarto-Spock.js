@@ -2,6 +2,8 @@ import {options} from "../constants/Options";
 import {useChoices} from "../../utils/Choices";
 import {OptionButton} from "../../utils/Buttons";
 import '../../css/lagarto.css';
+import {useEffect, useState} from "react";
+import {Records} from "./Records";
 
 export const LagartoSpock = () => {
     const {
@@ -15,6 +17,63 @@ export const LagartoSpock = () => {
         reset,
     } = useChoices();
 
+    let [winner, setWinner] = useState("");
+    let [time, setTime] = useState("");
+    let [player, setPlayer] = useState("")
+    let current = new Date().toISOString().slice(0,10);
+
+
+    useEffect(() => {
+        setTime(current);
+    }, [current])
+
+    useEffect(() => {
+        if (result === 0) setWinner("Empate");
+        else if (result === 2) setWinner("Ganó la computadora");
+        else if (result === 1) setWinner("Ganó el jugador");
+
+    }, [result])
+
+    const checkWinner = () => {
+        if (result === 0) setWinner("Empate");
+        else if (result === 2) setWinner("Ganó la computadora");
+        else if (result === 1) setWinner("Ganó el jugador");
+
+        callToApi();
+    }
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            "nombreJugador": "Luis",
+            "fechaHoraPartida": time,
+            "resultadoPartida": winner,
+        })
+    };
+    const callToApi = () => {
+        fetch('/api/lagarto/lagarto', requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
+
+                // check for error response
+                if (!response.ok) {
+                    // get error message from body or default to response status
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                }
+                else if(response.ok){
+                    setTime(null);
+                    setWinner(null)
+                    reset();
+                }
+
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
+    Records();
     return (
         <div className="flex items-center justify-center h-screen back">
             <div className="rounded-xl p-4 bg-cyan-700">
@@ -49,7 +108,7 @@ export const LagartoSpock = () => {
                             )}
                             <button
                                 className="bg-yellow-500 hover:bg-yellow-700 text-black font-semibold py-2 px-4 mt-4 border-b-4 border-yellow-700"
-                                onClick={reset}
+                                onClick={checkWinner}
                             >
                                 Jugar de nuevo
                             </button>
