@@ -1,12 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Source Code Pro', monospace;
 }
-
 body {
   background-color: #EEE5E9;
 }
-
 .pages {
   font-size: 3rem;
   margin-top: 2%;

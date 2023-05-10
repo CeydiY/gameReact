@@ -35,6 +35,17 @@ export const Tamagotchi = () => {
         setHappiness(happiness => Math.min(100, happiness + 5));
     };
 
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            "nombreMascota": "Luis",
+            "nivelHambre": hunger,
+            "nivelEnergia": health,
+            "nivelFelicidad": happiness,
+            "fechaNacimiento": age,
+        })
+    };
     
     return(
         <div>
